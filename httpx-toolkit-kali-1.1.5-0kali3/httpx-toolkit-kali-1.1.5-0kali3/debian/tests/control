@@ -1,0 +1,2 @@
+Test-Command: httpx-toolkit -h
+Restrictions: superficial, allow-stderr

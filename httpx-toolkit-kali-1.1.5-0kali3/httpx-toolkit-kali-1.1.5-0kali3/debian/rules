@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+export GOCACHE=$(CURDIR)/vendor
+export GOPATH=$(CURDIR)/vendor
+
+%:
+	dh $@ --builddirectory=_build --buildsystem=golang
+
+override_dh_auto_build:
+	make
+
+override_dh_auto_install:
+	dh_auto_install -- --no-source
+	cp httpx debian/httpx-toolkit/usr/bin/httpx-toolkit
+
+override_dh_auto_test:
+
+# go 1.19 compresses debug already, so override dwz to avoid an error
+# https://salsa.debian.org/go-team/packages/dh-golang/-/commit/831f3a9dccc14f63f21d3dfac0c0d0e0c25b4084
+override_dh_dwz:
